@@ -1,4 +1,4 @@
-TERMUX_PKG_HOMEPAGE=https://virgil3d.github.io/
+TERMUX_PKG_HOMEPAGE=https://virgil3d.github.io
 TERMUX_PKG_DESCRIPTION="A virtual 3D GPU for use inside qemu virtual machines over OpenGLES libraries on Android"
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_MAINTAINER="@licy183"
