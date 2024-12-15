@@ -1,4 +1,4 @@
-TERMUX_PKG_HOMEPAGE=https://www.mesa3d.org
+TERMUX_PKG_HOMEPAGE=https://www.mesa3d.org/
 TERMUX_PKG_DESCRIPTION="An open-source implementation of the OpenGL specification"
 TERMUX_PKG_LICENSE="MIT"
 TERMUX_PKG_LICENSE_FILE="docs/license.rst"
