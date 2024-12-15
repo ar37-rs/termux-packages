@@ -7,9 +7,9 @@ TERMUX_PKG_REVISION=1
 TERMUX_PKG_SRCURL=https://gitlab.freedesktop.org/virgl/virglrenderer/-/archive/virglrenderer-${TERMUX_PKG_VERSION}/virglrenderer-virglrenderer-${TERMUX_PKG_VERSION}.tar.gz
 TERMUX_PKG_SHA256=8ed35fdfdffd75f8f06680b2599823b9d905df2f5be835c83e723a574c6a755d
 TERMUX_PKG_AUTO_UPDATE=true
-TERMUX_PKG_DEPENDS="libdrm, libepoxy, libglvnd, libx11, mesa"
+TERMUX_PKG_DEPENDS="libdrm, libepoxy, libglvnd, libx11, mesa, vulkan-loader"
 TERMUX_PKG_BUILD_DEPENDS="xorgproto"
-TERMUX_PKG_EXTRA_CONFIGURE_ARGS="-Dplatforms=egl,glx"
+TERMUX_PKG_EXTRA_CONFIGURE_ARGS="-Dplatforms=egl,glx -Dvenus=true"
 
 termux_step_pre_configure() {
 	# error: using an array subscript expression within 'offsetof' is a Clang extension [-Werror,-Wgnu-offsetof-extensions]
