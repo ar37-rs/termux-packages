@@ -31,6 +31,7 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 -Dshared-llvm=enabled
 -Dplatforms=x11,wayland
 -Dosmesa=true
+-Dvulkan-layers=device-select,overlay
 -Dglvnd=enabled
 -Dxmlconfig=disabled
 "
