@@ -39,11 +39,11 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 termux_step_post_get_source() {
 	# Do not use meson wrap projects
 	rm -rf subprojects
- 	cp $TERMUX_PKG_BUILDER_DIR/cso_context.c /home/builder/.termux-build/mesa/src/src/gallium/auxiliary/cso_cache/cso_context.c
 }
 
 termux_step_pre_configure() {
 	termux_setup_cmake
+ 	cp $TERMUX_PKG_BUILDER_DIR/cso_context.c /home/builder/.termux-build/mesa/src/src/gallium/auxiliary/cso_cache/cso_context.c
 
 	CPPFLAGS+=" -D__USE_GNU"
 	LDFLAGS+=" -landroid-shmem"
