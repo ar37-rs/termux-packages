@@ -69,6 +69,8 @@ termux_step_pre_configure() {
 	else
 		termux_error_exit "Invalid arch: $TERMUX_ARCH"
 	fi
+        cp cso_context.c /home/builder/.termux-build/mesa/src/src/gallium/auxiliary/cso_cache/cso_context.c
+       
 }
 
 termux_step_post_configure() {
