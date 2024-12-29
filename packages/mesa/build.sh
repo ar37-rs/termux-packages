@@ -34,7 +34,6 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 -Dglvnd=enabled
 -Dxmlconfig=disabled
 -Dvulkan-layers=device-select,overlay
--Dtools=drm-shim
 "
 
 termux_step_post_get_source() {
