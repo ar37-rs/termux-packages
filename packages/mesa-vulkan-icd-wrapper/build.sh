@@ -1,9 +1,9 @@
 TERMUX_PKG_HOMEPAGE=https://www.mesa3d.org
 TERMUX_PKG_DESCRIPTION="Android Vulkan wrapper"
 TERMUX_PKG_LICENSE="MIT"
+TERMUX_PKG_LICENSE_FILE="docs/license.rst"
 TERMUX_PKG_MAINTAINER="xMeM <haooy@outlook.com>"
 TERMUX_PKG_VERSION="24.3.3"
-TERMUX_PKG_LICENSE_FILE="docs/license.rst"
 _LLVM_MAJOR_VERSION=$(. $TERMUX_SCRIPTDIR/packages/libllvm/build.sh; echo $LLVM_MAJOR_VERSION)
 _LLVM_MAJOR_VERSION_NEXT=$((_LLVM_MAJOR_VERSION + 1))
 TERMUX_PKG_SRCURL=https://archive.mesa3d.org/mesa-${TERMUX_PKG_VERSION}.tar.xz
@@ -28,8 +28,6 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 "
 
 termux_step_post_get_source() {
-	git fetch --unshallow
-	git checkout $_COMMIT
 	# Do not use meson wrap projects
 	rm -rf subprojects
 }
