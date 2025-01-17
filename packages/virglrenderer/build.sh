@@ -7,7 +7,7 @@ TERMUX_PKG_REVISION=1
 TERMUX_PKG_SRCURL=https://gitlab.freedesktop.org/virgl/virglrenderer/-/archive/virglrenderer-${TERMUX_PKG_VERSION}/virglrenderer-virglrenderer-${TERMUX_PKG_VERSION}.tar.gz
 TERMUX_PKG_SHA256=446ab3e265f574ec598e77bdfbf0616ee3c77361f0574bec733ba4bac4df730a
 TERMUX_PKG_AUTO_UPDATE=true
-TERMUX_PKG_DEPENDS="libdrm, libepoxy, libglvnd, libx11, mesa"
+TERMUX_PKG_DEPENDS="libdrm, libepoxy, libglvnd, libx11, mesa, vulkan-loader"
 TERMUX_PKG_BUILD_DEPENDS="xorgproto"
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="-Dplatforms=egl,glx -Dvenus=true"
 
