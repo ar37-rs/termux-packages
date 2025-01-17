@@ -13,7 +13,8 @@ TERMUX_PKG_SHA256=(
 	446ab3e265f574ec598e77bdfbf0616ee3c77361f0574bec733ba4bac4df730a
 	a7ced37f4102b745ac86d6a70a9da399cc139ff168ba6b8002b4d8d43c900c15
 )
-TERMUX_PKG_DEPENDS="angle-android"
+TERMUX_PKG_DEPENDS="angle-android, libdrm, libepoxy, libglvnd, libx11, mesa"
+TERMUX_PKG_BUILD_DEPENDS="xorgproto"
 TERMUX_PKG_HOSTBUILD=true
 
 termux_step_post_get_source() {
