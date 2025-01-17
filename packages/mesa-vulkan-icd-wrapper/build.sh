@@ -1,17 +1,15 @@
 TERMUX_PKG_HOMEPAGE=https://www.mesa3d.org
 TERMUX_PKG_DESCRIPTION="Android Vulkan wrapper"
 TERMUX_PKG_LICENSE="MIT"
-TERMUX_PKG_MAINTAINER="xMeM <haooy@outlook.com>"
-TERMUX_PKG_VERSION="24.3.3"
 TERMUX_PKG_LICENSE_FILE="docs/license.rst"
-_LLVM_MAJOR_VERSION=$(. $TERMUX_SCRIPTDIR/packages/libllvm/build.sh; echo $LLVM_MAJOR_VERSION)
-_LLVM_MAJOR_VERSION_NEXT=$((_LLVM_MAJOR_VERSION + 1))
-TERMUX_PKG_SRCURL=https://archive.mesa3d.org/mesa-${TERMUX_PKG_VERSION}.tar.xz
-TERMUX_PKG_SHA256=105afc00a4496fa4d29da74e227085544919ec7c86bd92b0b6e7fcc32c7125f4
-TERMUX_PKG_AUTO_UPDATE=true
+TERMUX_PKG_MAINTAINER="xMeM <haooy@outlook.com>"
+TERMUX_PKG_VERSION="25.0.0"
+TERMUX_PKG_REVISION=1
+TERMUX_PKG_SRCURL=git+https://github.com/ar37-rs/mesa
+TERMUX_PKG_GIT_BRANCH=wrapper
 TERMUX_PKG_DEPENDS="libandroid-shmem, libc++, libdrm, libx11, libxcb, libxshmfence, libwayland, vulkan-loader-generic, zlib, zstd"
 TERMUX_PKG_BUILD_DEPENDS="libwayland-protocols, libxrandr, xorgproto"
-TERMUX_PKG_API_LEVEL=26
+TERMUX_PKG_API_LEVEL=28
 
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --cmake-prefix-path $TERMUX_PREFIX
