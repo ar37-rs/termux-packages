@@ -12,4 +12,3 @@ angle_build_tests = false
 angle_use_vulkan_null_display = @USE_VULKAN_NULL@
 angle_expose_non_conformant_extensions_and_versions = true
 angle_enable_vulkan_validation_layers = true
-angle_vulkan_display_mode = "headless"
