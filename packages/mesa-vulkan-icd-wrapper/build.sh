@@ -6,7 +6,7 @@ TERMUX_PKG_MAINTAINER="xMeM <haooy@outlook.com>"
 TERMUX_PKG_VERSION="25.0.0"
 TERMUX_PKG_REVISION=1
 TERMUX_PKG_SRCURL=git+https://github.com/ar37-rs/mesa
-TERMUX_PKG_GIT_BRANCH=wrapper
+TERMUX_PKG_GIT_BRANCH="wrapper"
 TERMUX_PKG_DEPENDS="libandroid-shmem, libc++, libdrm, libx11, libxcb, libxshmfence, libwayland, vulkan-loader-generic, zlib, zstd"
 TERMUX_PKG_BUILD_DEPENDS="libwayland-protocols, libxrandr, xorgproto"
 TERMUX_PKG_API_LEVEL=28
@@ -27,7 +27,7 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 
 termux_step_post_get_source() {
 	git fetch --unshallow
-	git checkout $_COMMIT
+	git checkout wrapper
 	# Do not use meson wrap projects
 	rm -rf subprojects
 }
