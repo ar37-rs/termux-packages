@@ -44,6 +44,7 @@
        {"rendernode",          required_argument, NULL, OPT_RENDERNODE},
        {"venus",               no_argument, NULL, OPT_VENUS},
        {"socket-path",         required_argument, NULL, OPT_SOCKET_PATH},
+-      {"no-virgl",            no_argument, NULL, OPT_NO_VIRGL},
        {"compat",              no_argument, NULL, OPT_COMPAT_PROFILE},
 +      {"angle-gl",            no_argument, NULL, OPT_ANGLE_GL},
 +      {"angle-vulkan",        no_argument, NULL, OPT_ANGLE_VULKAN},
@@ -99,6 +100,7 @@
 +   server.use_egl_surfaceless = true;
 +   server.use_glx = false;
 +   server.use_gles = true;
++   server.no_virgl = true;
 +
     if (!server.no_virgl) {
        server.ctx_flags = VIRGL_RENDERER_USE_EGL;
