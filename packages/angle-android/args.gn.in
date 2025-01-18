@@ -13,4 +13,3 @@ angle_use_vulkan_null_display = @USE_VULKAN_NULL@
 angle_expose_non_conformant_extensions_and_versions = true
 angle_enable_vulkan_validation_layers = true
 is_desktop_android = true
-angle_use_x11 = true
