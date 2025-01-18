@@ -9,7 +9,7 @@ TERMUX_PKG_SRCURL=git+https://chromium.googlesource.com/angle/angle
 TERMUX_PKG_VERSION="2.1.$_COMMIT_POSISION-${_COMMIT:0:8}"
 TERMUX_PKG_REVISION=1
 TERMUX_PKG_DEPENDS="libandroid-shmem, libandroid-spawn, libc++, libx11, libxcb, libxcomposite, libxext, libxfixes, libxrandr, libxtst, zlib"
-ERMUX_PKG_BUILD_DEPENDS="xorgproto, libx11, libxcb"
+TERMUX_PKG_BUILD_DEPENDS="xorgproto, libx11, libxcb"
 TERMUX_PKG_HOSTBUILD=true
 
 termux_step_get_source() {
