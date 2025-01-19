@@ -56,7 +56,7 @@ termux_step_get_source() {
 termux_step_host_build() {
 	cd $TERMUX_PKG_HOSTBUILD_DIR
 
-	termux_setup_ninja && export CFLAGS="clang --target=aarch64-linux-unknown-gnu" && export CXXFLAGS="clang++ --target=aarch64-linux-unknown-gnu"
+	termux_setup_ninja
 	export PATH="$TERMUX_PKG_CACHEDIR/depot_tools:$PATH"
 	export DEPOT_TOOLS_UPDATE=0
 
