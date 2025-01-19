@@ -1,4 +1,4 @@
-TERMUX_PKG_HOMEPAGE=https://man7.org/linux/man-pages/man3/posix_spawn.3.html
+TERMUX_PKG_HOMEPAGE=https://man7.org/linux/man-pages/man3/posix_spawn.3.html/
 TERMUX_PKG_DESCRIPTION="Shared library for the posix_spawn system function"
 TERMUX_PKG_LICENSE="BSD 2-Clause"
 TERMUX_PKG_MAINTAINER="@termux"
