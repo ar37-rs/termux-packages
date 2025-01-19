@@ -1,4 +1,4 @@
-target_os = "android"
+target_os = "linux"
 target_cpu = "@TARGET_OS@"
 is_component_build = false
 is_debug = false
