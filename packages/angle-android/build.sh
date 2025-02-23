@@ -1,4 +1,4 @@
-TERMUX_PKG_HOMEPAGE=https://chromium.googlesource.com/angle/angle
+TERMUX_PKG_HOMEPAGE=https://chromium.googlesource.com/angle/angle/
 TERMUX_PKG_DESCRIPTION="A conformant OpenGL ES implementation for Windows, Mac, Linux, iOS and Android"
 TERMUX_PKG_LICENSE="BSD 3-Clause, Apache-2.0"
 TERMUX_PKG_MAINTAINER="@termux"
