@@ -12,7 +12,7 @@ TERMUX_PKG_SRCURL=(
 )
 TERMUX_PKG_SHA256=(
 	0633f3fd1991f742761ccfef5ed32814d9aab49a5c49fb5e4a48b58c15669623
-	c7cb7db11fad036d849b80a8fd6bf2dbae0d3c6b7eefb1bf77b1b7a284a7c913
+	848f299d35ef73151486841dd2f1dc453027327632f785643ad83adf7ed9219c
 )
 TERMUX_PKG_DEPENDS="fontconfig, freetype, krb5, libandroid-spawn, libc++, libgmp, libgnutls, libxcb, libxcomposite, libxcursor, libxfixes, libxrender, mesa, opengl, pulseaudio, sdl2, vulkan-loader, xorg-xrandr"
 TERMUX_PKG_ANTI_BUILD_DEPENDS="vulkan-loader"
