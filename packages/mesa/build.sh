@@ -21,9 +21,8 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --cmake-prefix-path $TERMUX_PREFIX
 -Dgbm=disabled
 -Dlibunwind=disabled
--Dglx=xlib
+-Dglx=dri
 -Dllvm=disabled
--Dlegacy-x11=dri2
 -Dplatforms=x11
 -Dgallium-drivers=softpipe,virgl,zink
 -Dglvnd=disabled
