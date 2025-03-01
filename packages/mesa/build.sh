@@ -29,7 +29,7 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 -Dplatforms=x11
 -Dgallium-drivers=swrast,virgl,zink
 -Dosmesa=true
--Dglvnd=enabled
+-Dglvnd=disabled
 -Dxmlconfig=disabled
 "
 
