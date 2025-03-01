@@ -21,14 +21,13 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --cmake-prefix-path $TERMUX_PREFIX
 -Dcpp_rtti=false
 -Dgbm=disabled
--Dopengl=true
 -Dlibunwind=disabled
 -Dglx=xlib
--Dllvm=enabled
+-Dllvm=disabled
+-Ddri3=disalbed
 -Dshared-llvm=enabled
 -Dplatforms=x11
 -Dgallium-drivers=swrast,virgl,zink
--Dosmesa=true
 -Dglvnd=disabled
 -Dxmlconfig=disabled
 "
