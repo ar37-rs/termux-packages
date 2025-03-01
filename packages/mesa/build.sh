@@ -19,13 +19,11 @@ TERMUX_PKG_REPLACES="libmesa"
 # FIXME: Set `shared-llvm` to disabled if possible
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --cmake-prefix-path $TERMUX_PREFIX
--Dcpp_rtti=false
 -Dgbm=disabled
 -Dlibunwind=disabled
 -Dglx=xlib
 -Dllvm=disabled
 -Dlegacy-x11=dri2
--Dshared-llvm=enabled
 -Dplatforms=x11
 -Dgallium-drivers=swrast,virgl,zink
 -Dglvnd=disabled
