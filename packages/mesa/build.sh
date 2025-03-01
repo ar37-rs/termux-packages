@@ -20,16 +20,17 @@ TERMUX_PKG_REPLACES="libmesa"
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 --cmake-prefix-path $TERMUX_PREFIX
 -Dcpp_rtti=false
--Dgbm=enabled
+-Dgbm=disabled
 -Dopengl=true
 -Degl=enabled
 -Degl-native-platform=x11
 -Dgles1=disabled
 -Dgles2=enabled
--Dglx=dri
+-Dlibunwind=disabled
+-Dglx=xlib
 -Dllvm=enabled
 -Dshared-llvm=enabled
--Dplatforms=x11,wayland
+-Dplatforms=x11
 -Dgallium-drivers=swrast,virgl,zink
 -Dosmesa=true
 -Dglvnd=enabled
@@ -60,9 +61,11 @@ termux_step_pre_configure() {
 	export PATH="$_WRAPPER_BIN:$PATH"
 
 	if [ $TERMUX_ARCH = "arm" ] || [ $TERMUX_ARCH = "aarch64" ]; then
-		TERMUX_PKG_EXTRA_CONFIGURE_ARGS+=" -Dvulkan-drivers=swrast,freedreno"
-		TERMUX_PKG_EXTRA_CONFIGURE_ARGS+=" -Dfreedreno-kmds=msm,kgsl"
+ 		echo ""
+		# TERMUX_PKG_EXTRA_CONFIGURE_ARGS+=" -Dvulkan-drivers=swrast,freedreno"
+		# TERMUX_PKG_EXTRA_CONFIGURE_ARGS+=" -Dfreedreno-kmds=msm,kgsl"
 	elif [ $TERMUX_ARCH = "i686" ] || [ $TERMUX_ARCH = "x86_64" ]; then
+ 		echo ""
 		TERMUX_PKG_EXTRA_CONFIGURE_ARGS+=" -Dvulkan-drivers=swrast"
 	else
 		termux_error_exit "Invalid arch: $TERMUX_ARCH"
@@ -93,6 +96,6 @@ termux_step_post_make_install() {
 	done
 
 	# Create symlinks
-	ln -sf libEGL_mesa.so ${TERMUX_PREFIX}/lib/libEGL_mesa.so.0
-	ln -sf libGLX_mesa.so ${TERMUX_PREFIX}/lib/libGLX_mesa.so.0
+	# ln -sf libEGL_mesa.so ${TERMUX_PREFIX}/lib/libEGL_mesa.so.0
+	# ln -sf libGLX_mesa.so ${TERMUX_PREFIX}/lib/libGLX_mesa.so.0
 }
