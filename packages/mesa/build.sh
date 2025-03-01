@@ -25,7 +25,7 @@ TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
 -Dllvm=disabled
 -Dlegacy-x11=dri2
 -Dplatforms=x11
--Dgallium-drivers=swrast,virgl,zink
+-Dgallium-drivers=softpipe,virgl,zink
 -Dglvnd=disabled
 -Dxmlconfig=disabled
 "
