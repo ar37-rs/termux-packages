@@ -117,6 +117,7 @@ termux_step_host_build() {
 	ninja -C out/android
 	mkdir -p build/vulkan-null
 	cp out/android/apks/AngleLibraries.apk build/vulkan-null/
+	cp out/android/apks/AngleLibraries.apk $TERMUX_PREFIX/opt/angle-android/
 	pushd build/vulkan-null
 	unzip AngleLibraries.apk
 	popd
@@ -152,7 +153,6 @@ termux_step_make_install() {
 	local _type
 	for _type in gl vulkan vulkan-null; do
 		mkdir -p $TERMUX_PREFIX/opt/angle-android/$_type
-		cp -v $TERMUX_PKG_HOSTBUILD_DIR/build/*.apk $TERMUX_PREFIX/opt/angle-android/
 		cp -v $TERMUX_PKG_HOSTBUILD_DIR/build/$_type/lib/$_lib_dir/*.so $TERMUX_PREFIX/opt/angle-android/$_type/
 	done
 }
