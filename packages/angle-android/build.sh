@@ -152,6 +152,7 @@ termux_step_make_install() {
 	local _type
 	for _type in gl vulkan vulkan-null; do
 		mkdir -p $TERMUX_PREFIX/opt/angle-android/$_type
+		cp -v $TERMUX_PKG_HOSTBUILD_DIR/build/*.apk $TERMUX_PREFIX/opt/angle-android/
 		cp -v $TERMUX_PKG_HOSTBUILD_DIR/build/$_type/lib/$_lib_dir/*.so $TERMUX_PREFIX/opt/angle-android/$_type/
 	done
 }
