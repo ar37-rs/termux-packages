@@ -18,7 +18,7 @@ TERMUX_PKG_EXTRA_HOSTBUILD_CONFIGURE_ARGS="
 "
 
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
-enable_wineandroid_drv=no
+enable_wineandroid_drv=yes
 enable_tools=yes
 --prefix=$TERMUX_PREFIX/opt/wine-stable
 --exec-prefix=$TERMUX_PREFIX/opt/wine-stable
@@ -30,43 +30,28 @@ enable_tools=yes
 --without-capi
 --without-coreaudio
 --without-cups
---without-dbus
 --with-fontconfig
 --with-freetype
 --without-gettext
 --with-gettextpo=no
 --without-gphoto
 --with-gnutls
---without-gstreamer
---without-inotify
+--with-gstreamer
 --with-krb5
 --with-mingw
---without-netapi
 --without-opencl
---with-opengl
---with-osmesa
+--without-osmesa
 --without-oss
 --without-pcap
---with-pthread
+--without-pthread
 --with-pulse
 --without-sane
---with-sdl
+--without-oss
 --without-udev
 --without-unwind
 --without-usb
 --without-v4l2
---with-vulkan
---with-xcomposite
---with-xcursor
---with-xfixes
 --without-xinerama
---with-xinput
---with-xinput2
---with-xrandr
---with-xrender
---without-xshape
---without-xshm
---without-xxf86vm
 "
 
 # Enable win64 on 64-bit arches.
