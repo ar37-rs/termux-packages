@@ -114,11 +114,11 @@ jobs:
           GIT_COMMIT_PACKAGES: "false"
           GIT_PUSH_PACKAGES: "false"
         run: |
-          declare -a packages
+          declare -a packages=()
           for repo_path in $(jq --raw-output 'del(.pkg_format) | keys | .[]' repo.json); do
             repo=$(jq --raw-output '.["'${repo_path}'"].name' repo.json)
-            if [ -f ./built_${repo}_packages.txt ]; then
-              packages="$packages $(cat ./built_${repo}_packages.txt | tr '\n' ' ')"
+            if [ -f "./built_${repo}_packages.txt" ]; then
+              packages+=($(cat "./built_${repo}_packages.txt"))
             fi
           done
           if [ -n "$packages" ]; then
@@ -140,12 +140,7 @@ jobs:
       - name: Set process id limit for 32-bit builds depending on aosp-libs
         run: echo 65535 | sudo tee /proc/sys/kernel/pid_max
       - name: Free additional disk space
-        run: |
-          sudo apt purge -yq $(dpkg -l | grep '^ii' | awk '{ print $2 }' | grep -P '(aspnetcore|cabal-|dotnet-|ghc-|libmono|mongodb-|mysql-|php)') \
-            firefox google-chrome-stable microsoft-edge-stable mono-devel mono-runtime-common monodoc-manual ruby
-          sudo apt autoremove -yq
-          sudo apt clean
-          sudo rm -fr /opt/ghc /opt/hostedtoolcache /usr/lib/node_modules /usr/local/share/boost /usr/share/dotnet /usr/share/swift
+        run: ./scripts/free-space.sh
       - name: Process package updates
         env:
           GITHUB_TOKEN: ${{ secrets.TERMUXBOT2_TOKEN }}

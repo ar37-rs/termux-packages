@@ -10,10 +10,9 @@ TERMUX_PKG_CONFLICTS="vim-gtk"
 TERMUX_PKG_BREAKS="vim-python, vim-runtime"
 TERMUX_PKG_REPLACES="vim-python, vim-runtime"
 TERMUX_PKG_PROVIDES="vim-python"
-TERMUX_PKG_VERSION="9.1.1200"
-TERMUX_PKG_REVISION=1
+TERMUX_PKG_VERSION="9.1.1270"
 TERMUX_PKG_SRCURL="https://github.com/vim/vim/archive/v${TERMUX_PKG_VERSION}.tar.gz"
-TERMUX_PKG_SHA256=eeba446b1f196f1019773c6f07e8b9929bcfc498a6c444f94dffc81a85bf1a73
+TERMUX_PKG_SHA256=7484c0d602de017eb39ddec26de3584482e72d8d62a80b81ec7aa94d5722026e
 TERMUX_PKG_BUILD_IN_SRC=true
 TERMUX_PKG_CONFFILES="share/vim/vimrc"
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
@@ -62,7 +61,7 @@ share/vim/vim91/tools
 # Vim releases every commit as a new patch release.
 # To avoid auto update spam, we only update Vim every 50th patch.
 TERMUX_PKG_AUTO_UPDATE=true
-TERMUX_PKG_UPDATE_VERSION_REGEXP='\d+\.\d+\.\d{2}(5|0)0'
+TERMUX_PKG_UPDATE_VERSION_REGEXP='\d+\.\d+\.\d\d[05]0'
 
 termux_pkg_auto_update() {
 	# This auto_update function is shared by `vim` and `vim-gtk`
@@ -113,8 +112,6 @@ termux_step_pre_configure() {
 termux_step_post_make_install() {
 	sed -e "s%\@TERMUX_PREFIX\@%${TERMUX_PREFIX}%g" "$TERMUX_PKG_BUILDER_DIR/vimrc" \
 		> "$TERMUX_PREFIX/share/vim/vimrc"
-
-	ln -sfr "$TERMUX_PREFIX/bin/vim" "$TERMUX_PREFIX/bin/vi"
 
 	### Remove most tutor files:
 	# Make a directory to temporarily hold the ones we want to keep
