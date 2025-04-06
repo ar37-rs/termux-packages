@@ -3,7 +3,7 @@ TERMUX_PKG_DESCRIPTION="A compatibility layer for running Windows programs"
 TERMUX_PKG_LICENSE="LGPL-2.1"
 TERMUX_PKG_LICENSE_FILE="LICENSE, LICENSE.OLD, COPYING.LIB"
 TERMUX_PKG_MAINTAINER="@termux"
-TERMUX_PKG_VERSION="10.4"
+TERMUX_PKG_VERSION="9.18"
 TERMUX_PKG_API_LEVEL=28
 TERMUX_PKG_REVISION=1
 TERMUX_PKG_SRCURL=https://dl.winehq.org/wine/source/${TERMUX_PKG_VERSION%%.*}.x/wine-$TERMUX_PKG_VERSION.tar.xz
@@ -19,7 +19,7 @@ TERMUX_PKG_EXTRA_HOSTBUILD_CONFIGURE_ARGS="
 "
 
 TERMUX_PKG_EXTRA_CONFIGURE_ARGS="
-enable_wineandroid_drv=yes
+enable_wineandroid_drv=no
 enable_tools=yes
 --prefix=$TERMUX_PREFIX/opt/wine-stable
 --exec-prefix=$TERMUX_PREFIX/opt/wine-stable
