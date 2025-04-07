@@ -2,9 +2,9 @@ TERMUX_PKG_HOMEPAGE=https://chromium.googlesource.com/angle/angle
 TERMUX_PKG_DESCRIPTION="A conformant OpenGL ES implementation for Windows, Mac, Linux, iOS and Android"
 TERMUX_PKG_LICENSE="BSD 3-Clause, Apache-2.0"
 TERMUX_PKG_MAINTAINER="@termux"
-_COMMIT_DATE=2025.04.03
-_COMMIT=3818d37d5e94317f01810053b8f28c1f1e8b98e6
-_COMMIT_POSISION=25208
+_COMMIT_DATE=2025.04.07
+_COMMIT=0e28c030a2625e3022a9adeec9746519af4217a2
+_COMMIT_POSISION=25217
 TERMUX_PKG_SRCURL=git+https://chromium.googlesource.com/angle/angle
 TERMUX_PKG_VERSION="2.1.$_COMMIT_POSISION-${_COMMIT:0:8}"
 TERMUX_PKG_REVISION=1
@@ -98,7 +98,7 @@ termux_step_host_build() {
 	popd
 	ninja -C out/android
 	mkdir -p build/vulkan
-	cp out/android/apks/AngleLibraries.apk build/vulkan/
+	cp out/android/apks/AngleLibraries.apk build/vulkan/ && mkdir -p $TERMUX_PREFIX/opt/angle-android && cp out/android/apks/AngleLibraries.apk $TERMUX_PREFIX/opt/angle-android
 	pushd build/vulkan
 	unzip AngleLibraries.apk
 	popd
