@@ -10,7 +10,7 @@ termux_step_start_build() {
 		TERMUX_PKG_PLATFORM_INDEPENDENT=true
 	fi
 
-	if [ -n "${TERMUX_PKG_BLACKLISTED_ARCHES:=""}" ] && [ "$TERMUX_PKG_BLACKLISTED_ARCHES" != "${TERMUX_PKG_BLACKLISTED_ARCHES/$TERMUX_ARCH/}" ]; then
+	if [ -n "${TERMUX_PKG_EXCLUDED_ARCHES:=""}" ] && [ "$TERMUX_PKG_EXCLUDED_ARCHES" != "${TERMUX_PKG_EXCLUDED_ARCHES/$TERMUX_ARCH/}" ]; then
 		echo "Skipping building $TERMUX_PKG_NAME for arch $TERMUX_ARCH"
 		exit 0
 	fi
@@ -79,6 +79,10 @@ termux_step_start_build() {
 			termux_error_exit "Cannot continue this build, hostbuilt tools are missing"
 		fi
 
+		# Set TERMUX_ELF_CLEANER for on-device continued build
+		if [ "$TERMUX_PACKAGE_LIBRARY" = "bionic" ] && [ "$TERMUX_ON_DEVICE_BUILD" = "true" ]; then
+			TERMUX_ELF_CLEANER="$(command -v termux-elf-cleaner)"
+		fi
 		# The rest in this function can be skipped when doing
 		# a continued build
 		return

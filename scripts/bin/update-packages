@@ -103,11 +103,11 @@ _update() {
 	export TERMUX_PKG_BUILDER_DIR
 	TERMUX_PKG_BUILDER_DIR="$(realpath "$1")" # Directory containing build.sh.
 
-	IFS="," read -r -a BLACKLISTED_ARCH <<<"${TERMUX_PKG_BLACKLISTED_ARCHES:-}"
+	IFS="," read -r -a EXCLUDED_ARCH <<<"${TERMUX_PKG_EXCLUDED_ARCHES:-}"
 	export TERMUX_ARCH="" # Arch to test updates.
 	for arch in aarch64 arm i686 x86_64; do
 		# shellcheck disable=SC2076
-		if [[ ! " ${BLACKLISTED_ARCH[*]} " =~ " ${arch} " ]]; then
+		if [[ ! " ${EXCLUDED_ARCH[*]} " =~ " ${arch} " ]]; then
 			TERMUX_ARCH="${arch}"
 			break
 		fi
@@ -277,23 +277,19 @@ _check_updated() {
 
 _run_update() {
 	local pkg_dir="$1"
-	[[ -n "${_LATEST_TAGS[${pkg_dir##*/}]:-}" ]] && export __CACHED_TAG="${_LATEST_TAGS[${pkg_dir##*/}]}"
 	# Run each package update in separate process since we include their environment variables.
 	local output=""
-	{
-		output=$(
-			set -euo pipefail
-			_update "${pkg_dir}" 2>&1 | tee /dev/fd/3 # fd 3 is used to output to stdout as well.
-			exit "${PIPESTATUS[0]}"                   # Return exit code of _update.
-		)
-	} 3>&1
-	# shellcheck disable=SC2181
-	if [[ $? -ne 0 ]]; then
-		_FAILED_UPDATES["$(basename "${pkg_dir}")"]="${output}"
-	else
+	if output=$(
+		set -euo pipefail
+		# Pass cached tag we obtained earlier
+		[[ -n "${_LATEST_TAGS[${pkg_dir##*/}]:-}" ]] && export __CACHED_TAG="${_LATEST_TAGS[${pkg_dir##*/}]}" || :
+		exec > >(tee /dev/fd/2) 2>&1 # output everything to stdout as well.
+		_update "${pkg_dir}"
+	); then
 		_ALREADY_SEEN+=("$(basename "${pkg_dir}")")
+	else
+		_FAILED_UPDATES["$(basename "${pkg_dir}")"]="${output}"
 	fi
-	unset __CACHED_TAG
 }
 
 declare -a _CACHED_ISSUE_TITLES=()
