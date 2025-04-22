@@ -98,7 +98,7 @@ termux_step_host_build() {
 	popd
 	ninja -C out/android
 	mkdir -p build/vulkan
-	cp out/android/apks/AngleLibraries.apk build/vulkan/ && mkdir -p $TERMUX_PREFIX/opt/angle-android && cp out/android/apks/AngleLibraries.apk $TERMUX_PREFIX/opt/angle-android
+	cp out/android/apks/AngleLibraries.apk build/vulkan/
 	pushd build/vulkan
 	unzip AngleLibraries.apk
 	popd
@@ -116,7 +116,7 @@ termux_step_host_build() {
 	popd
 	ninja -C out/android
 	mkdir -p build/vulkan-null
-	cp out/android/apks/AngleLibraries.apk build/vulkan-null/
+	cp out/android/apks/AngleLibraries.apk build/vulkan-null/ && mkdir -p $TERMUX_PREFIX/opt/angle-android && cp out/android/apks/AngleLibraries.apk $TERMUX_PREFIX/opt/angle-android
 	pushd build/vulkan-null
 	unzip AngleLibraries.apk
 	popd
