@@ -68,7 +68,7 @@ termux_step_host_build() {
 	fi
 
 	# Build with Android's GL
-	mkdir -p out/android
+	mkdir -p out/android && export AUTONINJA_BUILD_ID=253421
 	sed -e"s|@TARGET_OS@|$_target_os|g" \
 		-e "s|@ENABLE_GL@|true|g" \
 		-e "s|@ENABLE_VULKAN@|false|g" \
@@ -86,7 +86,7 @@ termux_step_host_build() {
 	popd
 
 	# Build with Android's Vulkan
-	mkdir -p out/android
+	mkdir -p out/android && export AUTONINJA_BUILD_ID=253422
 	sed -e"s|@TARGET_OS@|$_target_os|g" \
 		-e "s|@ENABLE_GL@|false|g" \
 		-e "s|@ENABLE_VULKAN@|true|g" \
@@ -104,7 +104,7 @@ termux_step_host_build() {
 	popd
 
 	# Build with Android's Vulkan null display
-	mkdir -p out/android
+	mkdir -p out/android && export AUTONINJA_BUILD_ID=253423
 	sed -e "s|@TARGET_OS@|$_target_os|g" \
 		-e "s|@ENABLE_GL@|false|g" \
 		-e "s|@ENABLE_VULKAN@|true|g" \
