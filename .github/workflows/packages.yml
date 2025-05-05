@@ -23,6 +23,12 @@ on:
 
 permissions: {} # none
 
+concurrency:
+  # if this is a PR event, group = "pr-<number>", otherwise group = run_id so it never collides with other runs
+  group: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || github.run_id }}
+  # only cancel in-progress when it’s a PR
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
   build:
     permissions:
@@ -44,18 +50,18 @@ jobs:
       env:
         MANUAL_INPUT_PACKAGES: ${{ github.event.inputs.packages }}
       run: |
+        # We are intentionally not using .commits[0].id and .commits[-1].id as github seems to
+        # only send 20 commits in the payload for github action runs instead of the 2048 documented
+        # limit. Perhaps 2048 is the limit just for webhooks, where they haven't documented
+        # properly that the limit for github actions is only 20:
+        #
+        # https://docs.github.com/en/webhooks/webhook-events-and-payloads#push
+        OLD_COMMIT="${{ github.event.before }}"
+        HEAD_COMMIT="${{ github.event.after }}"
         if [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
           BASE_REF="${{ github.event.pull_request.base.ref }}"
           git fetch origin "${BASE_REF:-master}" 2>/dev/null
           BASE_COMMIT="$(git merge-base "origin/${BASE_REF:-master}" "HEAD")"
-          # We are intentionally not using .commits[0].id and .commits[-1].id as github seems to
-          # only send 20 commits in the payload for github action runs instead of the 2048 documented
-          # limit. Perhaps 2048 is the limit just for webhooks, where they haven't documented
-          # properly that the limit for github actions is only 20:
-          #
-          # https://docs.github.com/en/webhooks/webhook-events-and-payloads#push
-          OLD_COMMIT="${{ github.event.before }}"
-          HEAD_COMMIT="${{ github.event.after }}"
           if [ -z "${{ github.event.pull_request.base.sha }}" ]; then
             if ! git log "$OLD_COMMIT" > /dev/null; then
               if [ "$(git branch --show-current)" = "master" ]; then
@@ -220,16 +226,14 @@ jobs:
         fi
 
     - name: Free additional disk space (if needed)
-      env:
-        DOCKER_BUILD: ${{ steps.build-info.outputs.docker-build }}
+      if: ${{ steps.build-info.outputs.docker-build == 'false' && steps.build-info.outputs.skip-building != 'true' }}
       run: |
-        if [ "$DOCKER_BUILD" == 'false' ]; then
-          ./scripts/setup-ubuntu.sh
-          sudo apt install ninja-build
-          ./scripts/free-space.sh
-        fi
+        ./scripts/setup-ubuntu.sh
+        sudo apt install ninja-build
+        ./scripts/free-space.sh
 
     - name: Build packages
+      if: ${{ steps.build-info.outputs.skip-building != 'true' }}
       env:
         DOCKER_BUILD: ${{ steps.build-info.outputs.docker-build }}
       run: |

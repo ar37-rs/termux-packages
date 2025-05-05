@@ -323,6 +323,10 @@ termux_step_post_make_install() {
 	return
 }
 
+# Install hooks (alpm-hooks) and hook-scripts into the pacman package
+# shellcheck source=scripts/build/termux_step_install_pacman_hooks.sh
+source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_install_pacman_hooks.sh"
+
 # Add service scripts from array TERMUX_PKG_SERVICE_SCRIPT, if it is set
 # shellcheck source=scripts/build/termux_step_install_service_scripts.sh
 source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_install_service_scripts.sh"
@@ -332,8 +336,8 @@ source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_install_service_scripts.sh"
 source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_install_license.sh"
 
 # Function to cp (through tar) installed files to massage dir
-# shellcheck source=scripts/build/termux_step_extract_into_massagedir.sh
-source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_extract_into_massagedir.sh"
+# shellcheck source=scripts/build/termux_step_copy_into_massagedir.sh
+source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_copy_into_massagedir.sh"
 
 # Hook function to create {pre,post}install, {pre,post}rm-scripts for subpkgs
 # shellcheck source=scripts/build/termux_step_create_subpkg_debscripts.sh
@@ -358,6 +362,11 @@ source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_strip_elf_symbols.sh"
 # Function to run termux-elf-cleaner during termux_step_massage
 # shellcheck source=scripts/build/termux_step_elf_cleaner.sh
 source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_elf_cleaner.sh"
+
+# Hook for packages before massage step
+termux_step_pre_massage() {
+	return
+}
 
 # Hook for packages after massage step
 termux_step_post_massage() {
@@ -702,10 +711,14 @@ for ((i=0; i<${#PACKAGE_LIST[@]}; i++)); do
 		termux_step_make_install
 		cd "$TERMUX_PKG_BUILDDIR"
 		termux_step_post_make_install
+		termux_step_install_pacman_hooks
 		termux_step_install_service_scripts
 		termux_step_install_license
 		cd "$TERMUX_PKG_MASSAGEDIR"
-		termux_step_extract_into_massagedir
+		termux_step_copy_into_massagedir
+		cd "$TERMUX_PKG_MASSAGEDIR/$TERMUX_PREFIX_CLASSICAL"
+		termux_step_pre_massage
+		cd "$TERMUX_PKG_MASSAGEDIR/$TERMUX_PREFIX_CLASSICAL"
 		termux_step_massage
 		cd "$TERMUX_PKG_MASSAGEDIR/$TERMUX_PREFIX_CLASSICAL"
 		termux_step_post_massage
