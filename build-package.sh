@@ -100,13 +100,13 @@ source "$TERMUX_SCRIPTDIR/scripts/build/setup/termux_setup_dotnet.sh"
 # shellcheck source=scripts/build/setup/termux_setup_flang.sh
 source "$TERMUX_SCRIPTDIR/scripts/build/setup/termux_setup_flang.sh"
 
-# Utility function for setting up GHC toolchain.
+# Utility function to setup a GHC cross-compiler toolchain targeting Android.
 # shellcheck source=scripts/build/setup/termux_setup_ghc.sh
 source "$TERMUX_SCRIPTDIR/scripts/build/setup/termux_setup_ghc.sh"
 
-# Utility function to setup a GHC cross-compiler toolchain targeting Android.
-# shellcheck source=scripts/build/setup/termux_setup_ghc_cross_compiler.sh
-source "$TERMUX_SCRIPTDIR/scripts/build/setup/termux_setup_ghc_cross_compiler.sh"
+# Utility function to setup GHC iserv to cross-compile haskell-template.
+# shellcheck source=scripts/build/setup/termux_setup_ghc_iserv.sh
+source "$TERMUX_SCRIPTDIR/scripts/build/setup/termux_setup_ghc_iserv.sh"
 
 # Utility function to setup cabal-install (may be used by ghc toolchain).
 # shellcheck source=scripts/build/setup/termux_setup_cabal.sh.
@@ -128,6 +128,10 @@ source "$TERMUX_SCRIPTDIR/scripts/build/setup/termux_setup_gn.sh"
 # Utility function for golang-using packages to setup a go toolchain.
 # shellcheck source=scripts/build/setup/termux_setup_golang.sh
 source "$TERMUX_SCRIPTDIR/scripts/build/setup/termux_setup_golang.sh"
+
+# Utility function for setting up LDC cross environment.
+# shellcheck source=scripts/build/setup/termux_setup_ldc.sh
+source "$TERMUX_SCRIPTDIR/scripts/build/setup/termux_setup_ldc.sh"
 
 # Utility function for setting up no-integrated (GNU Binutils) as.
 # shellcheck source=scripts/build/setup/termux_setup_no_integrated_as.sh
@@ -293,9 +297,9 @@ source "$TERMUX_SCRIPTDIR/scripts/build/configure/termux_step_configure_cmake.sh
 # shellcheck source=scripts/build/configure/termux_step_configure_meson.sh
 source "$TERMUX_SCRIPTDIR/scripts/build/configure/termux_step_configure_meson.sh"
 
-# Setup configure args and run haskell build system. This function is called from termux_step_configure.
-# shellcheck source=scripts/build/configure/termux_step_configure_haskell_build.sh
-source "$TERMUX_SCRIPTDIR/scripts/build/configure/termux_step_configure_haskell_build.sh"
+# Setup configure args and run cabal. This function is called from termux_step_configure
+# shellcheck source=scripts/build/configure/termux_step_configure_cabal.sh
+source "$TERMUX_SCRIPTDIR/scripts/build/configure/termux_step_configure_cabal.sh"
 
 # Configure the package
 # shellcheck source=scripts/build/configure/termux_step_configure.sh
@@ -319,6 +323,10 @@ termux_step_post_make_install() {
 	return
 }
 
+# Install hooks (alpm-hooks) and hook-scripts into the pacman package
+# shellcheck source=scripts/build/termux_step_install_pacman_hooks.sh
+source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_install_pacman_hooks.sh"
+
 # Add service scripts from array TERMUX_PKG_SERVICE_SCRIPT, if it is set
 # shellcheck source=scripts/build/termux_step_install_service_scripts.sh
 source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_install_service_scripts.sh"
@@ -328,8 +336,8 @@ source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_install_service_scripts.sh"
 source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_install_license.sh"
 
 # Function to cp (through tar) installed files to massage dir
-# shellcheck source=scripts/build/termux_step_extract_into_massagedir.sh
-source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_extract_into_massagedir.sh"
+# shellcheck source=scripts/build/termux_step_copy_into_massagedir.sh
+source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_copy_into_massagedir.sh"
 
 # Hook function to create {pre,post}install, {pre,post}rm-scripts for subpkgs
 # shellcheck source=scripts/build/termux_step_create_subpkg_debscripts.sh
@@ -354,6 +362,11 @@ source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_strip_elf_symbols.sh"
 # Function to run termux-elf-cleaner during termux_step_massage
 # shellcheck source=scripts/build/termux_step_elf_cleaner.sh
 source "$TERMUX_SCRIPTDIR/scripts/build/termux_step_elf_cleaner.sh"
+
+# Hook for packages before massage step
+termux_step_pre_massage() {
+	return
+}
 
 # Hook for packages after massage step
 termux_step_post_massage() {
@@ -698,10 +711,14 @@ for ((i=0; i<${#PACKAGE_LIST[@]}; i++)); do
 		termux_step_make_install
 		cd "$TERMUX_PKG_BUILDDIR"
 		termux_step_post_make_install
+		termux_step_install_pacman_hooks
 		termux_step_install_service_scripts
 		termux_step_install_license
 		cd "$TERMUX_PKG_MASSAGEDIR"
-		termux_step_extract_into_massagedir
+		termux_step_copy_into_massagedir
+		cd "$TERMUX_PKG_MASSAGEDIR/$TERMUX_PREFIX_CLASSICAL"
+		termux_step_pre_massage
+		cd "$TERMUX_PKG_MASSAGEDIR/$TERMUX_PREFIX_CLASSICAL"
 		termux_step_massage
 		cd "$TERMUX_PKG_MASSAGEDIR/$TERMUX_PREFIX_CLASSICAL"
 		termux_step_post_massage
