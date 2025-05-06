@@ -31,7 +31,6 @@ enable_tools=yes
 --without-capi
 --without-coreaudio
 --without-cups
---without-dbus
 --with-fontconfig
 --with-freetype
 --without-gettext
@@ -42,7 +41,6 @@ enable_tools=yes
 --without-inotify
 --with-krb5
 --with-mingw
---without-netapi
 --without-opencl
 --with-opengl
 --with-osmesa
