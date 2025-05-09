@@ -28,7 +28,7 @@ termux_step_get_source() {
 		touch "$TERMUX_PKG_CACHEDIR/.depot_tools-fetched"
 	fi
 	export PATH="$TERMUX_PKG_CACHEDIR/depot_tools:$PATH"
-	export DEPOT_TOOLS_UPDATE=0
+	export DEPOT_TOOLS_UPDATE=1
 
 	# Get source
 	rm -rf "$TERMUX_PKG_CACHEDIR/tmp-checkout"
@@ -68,6 +68,7 @@ termux_step_host_build() {
 	fi
 
 	# Build with Android's GL
+	python scripts/bootstrap.py
 	mkdir -p out/android && export AUTONINJA_BUILD_ID=253421
 	sed -e"s|@TARGET_OS@|$_target_os|g" \
 		-e "s|@ENABLE_GL@|true|g" \
