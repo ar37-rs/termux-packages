@@ -8,7 +8,7 @@ TERMUX_PKG_API_LEVEL=29
 TERMUX_PKG_REVISION=1
 TERMUX_PKG_SRCURL=https://dl.winehq.org/wine/source/${TERMUX_PKG_VERSION%%.*}.x/wine-$TERMUX_PKG_VERSION.tar.xz
 TERMUX_PKG_SHA256=751367a3109990d703e590e2db530187c4e1dfd2e8e61373ab84b42fe11b18fa
-TERMUX_PKG_DEPENDS="fontconfig, freetype, libandroid-spawn, libc++, libgmp, libgnutls, libxcb, libxcomposite, libxcursor, libxfixes, libxrender, mesa, opengl, pulseaudio, sdl2 | sdl2-compat, vulkan-loader, xorg-xrandr"
+TERMUX_PKG_DEPENDS="fontconfig, freetype, krb5, libandroid-spawn, libc++, libgmp, libgnutls, libxcb, libxcomposite, libxcursor, libxfixes, libxrender, mesa, opengl, pulseaudio, sdl2 | sdl2-compat, vulkan-loader, xorg-xrandr"
 TERMUX_PKG_ANTI_BUILD_DEPENDS="sdl2-compat, vulkan-loader"
 TERMUX_PKG_BUILD_DEPENDS="libandroid-spawn-static, vulkan-loader-generic"
 TERMUX_PKG_NO_STATICSPLIT=true
@@ -25,50 +25,28 @@ enable_tools=yes
 --exec-prefix=$TERMUX_PREFIX/opt/wine-stable
 --libdir=$TERMUX_PREFIX/opt/wine-stable/lib
 --with-wine-tools=$TERMUX_PKG_HOSTBUILD_DIR
+--with-vulkan
 --enable-nls
 --disable-tests
 --without-alsa
+--disable-winemenubuilder
+--disable-win16
+--enable-win64
+--disable-tests
 --without-capi
 --without-coreaudio
 --without-cups
---with-fontconfig
---with-freetype
---without-gettext
---with-gettextpo=no
 --without-gphoto
---with-gnutls
---without-gstreamer
---without-inotify
---without-krb5
---without-dbus
---without-netapi
---without-gssapi
---with-mingw
---without-opencl
---with-opengl
---with-osmesa
 --without-oss
 --without-pcap
---with-pthread
---with-pulse
+--without-pcsclite
 --without-sane
---with-sdl
 --without-udev
 --without-unwind
 --without-usb
 --without-v4l2
---with-vulkan
---with-xcomposite
---with-xcursor
---with-xfixes
+--without-wayland
 --without-xinerama
---with-xinput
---with-xinput2
---with-xrandr
---with-xrender
---without-xshape
---without-xshm
---without-xxf86vm
 "
 
 # Enable win64 on 64-bit arches.
