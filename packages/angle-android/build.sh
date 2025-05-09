@@ -56,7 +56,7 @@ termux_step_host_build() {
 
 	termux_setup_ninja
 	export PATH="$TERMUX_PKG_CACHEDIR/depot_tools:$PATH"
-	export DEPOT_TOOLS_UPDATE=0
+	export DEPOT_TOOLS_UPDATE=1
 
 	local _target_os=
 	if [ "$TERMUX_ARCH" = "aarch64" ] || [ "$TERMUX_ARCH" = "arm" ]; then
