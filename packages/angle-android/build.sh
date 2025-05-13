@@ -68,7 +68,6 @@ termux_step_host_build() {
 	fi
 
 	# Build with Android's GL
-	python scripts/bootstrap.py
 	mkdir -p out/android && export AUTONINJA_BUILD_ID=253421
 	sed -e"s|@TARGET_OS@|$_target_os|g" \
 		-e "s|@ENABLE_GL@|true|g" \
