@@ -220,13 +220,11 @@ PACKAGES+=" happy"
 PACKAGES+=" itstool"
 PACKAGES+=" libdbus-glib-1-dev-bin"
 PACKAGES+=" libgdk-pixbuf2.0-dev"
-PACKAGES+=" libwayland-dev"
 PACKAGES+=" python3-html5lib"
 PACKAGES+=" python3-xcbgen"
 PACKAGES+=" sassc"
 PACKAGES+=" texlive-extra-utils"
 PACKAGES+=" unifdef"
-PACKAGES+=" wayland-scanner++"
 PACKAGES+=" xfce4-dev-tools"
 PACKAGES+=" xfonts-utils"
 PACKAGES+=" xutils-dev"
@@ -297,6 +295,14 @@ PACKAGES+=" libwebpmux3 libwebpmux3:i386"
 # Required by chromium-based packages
 PACKAGES+=" libfontconfig1"
 PACKAGES+=" libfontconfig1:i386"
+PACKAGES+=" libcups2-dev"
+PACKAGES+=" libglib2.0-0t64:i386"
+PACKAGES+=" libexpat1:i386"
+
+# Required by code-oss
+PACKAGES+=" libxkbfile-dev"
+PACKAGES+=" libsecret-1-dev"
+PACKAGES+=" libkrb5-dev"
 
 # Required by wine-stable
 PACKAGES+=" libfreetype-dev:i386"
