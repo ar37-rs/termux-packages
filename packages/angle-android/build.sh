@@ -1,14 +1,14 @@
-TERMUX_PKG_HOMEPAGE=https://chromium.googlesource.com/angle/angle
+TERMUX_PKG_HOMEPAGE=https://chromium.googlesource.com/angle/angle/
 TERMUX_PKG_DESCRIPTION="A conformant OpenGL ES implementation for Windows, Mac, Linux, iOS and Android"
 TERMUX_PKG_LICENSE="BSD 3-Clause, Apache-2.0"
 TERMUX_PKG_MAINTAINER="@termux"
-_COMMIT_DATE=2025.02.23
-_COMMIT=f09a19cebdaf04bddcd3101e9783207cb5cf3e13
-_COMMIT_POSISION=24923
+_COMMIT_DATE=2025.09.04
+_COMMIT=397b39fee2c5b09a1a69d2682c45b2e940d16b7e
+_COMMIT_POSISION=26035
 TERMUX_PKG_SRCURL=git+https://chromium.googlesource.com/angle/angle
 TERMUX_PKG_VERSION="2.1.$_COMMIT_POSISION-${_COMMIT:0:8}"
-TERMUX_PKG_REVISION=2
-
+TERMUX_PKG_REVISION=1
+TERMUX_PKG_API_LEVEL=29
 TERMUX_PKG_HOSTBUILD=true
 
 termux_step_get_source() {
@@ -28,8 +28,7 @@ termux_step_get_source() {
 		touch "$TERMUX_PKG_CACHEDIR/.depot_tools-fetched"
 	fi
 	export PATH="$TERMUX_PKG_CACHEDIR/depot_tools:$PATH"
-	$TERMUX_PKG_CACHEDIR/depot_tools/ensure_bootstrap
-	export DEPOT_TOOLS_UPDATE=0
+	export DEPOT_TOOLS_UPDATE=1
 
 	# Get source
 	rm -rf "$TERMUX_PKG_CACHEDIR/tmp-checkout"
@@ -57,7 +56,7 @@ termux_step_host_build() {
 
 	termux_setup_ninja
 	export PATH="$TERMUX_PKG_CACHEDIR/depot_tools:$PATH"
-	export DEPOT_TOOLS_UPDATE=0
+	export DEPOT_TOOLS_UPDATE=1
 
 	local _target_os=
 	if [ "$TERMUX_ARCH" = "aarch64" ] || [ "$TERMUX_ARCH" = "arm" ]; then
@@ -69,7 +68,7 @@ termux_step_host_build() {
 	fi
 
 	# Build with Android's GL
-	mkdir -p out/android
+	mkdir -p out/android && export AUTONINJA_BUILD_ID=253421
 	sed -e"s|@TARGET_OS@|$_target_os|g" \
 		-e "s|@ENABLE_GL@|true|g" \
 		-e "s|@ENABLE_VULKAN@|false|g" \
@@ -87,7 +86,7 @@ termux_step_host_build() {
 	popd
 
 	# Build with Android's Vulkan
-	mkdir -p out/android
+	mkdir -p out/android && export AUTONINJA_BUILD_ID=253422
 	sed -e"s|@TARGET_OS@|$_target_os|g" \
 		-e "s|@ENABLE_GL@|false|g" \
 		-e "s|@ENABLE_VULKAN@|true|g" \
@@ -105,7 +104,7 @@ termux_step_host_build() {
 	popd
 
 	# Build with Android's Vulkan null display
-	mkdir -p out/android
+	mkdir -p out/android && export AUTONINJA_BUILD_ID=253423
 	sed -e "s|@TARGET_OS@|$_target_os|g" \
 		-e "s|@ENABLE_GL@|false|g" \
 		-e "s|@ENABLE_VULKAN@|true|g" \
@@ -117,7 +116,7 @@ termux_step_host_build() {
 	popd
 	ninja -C out/android
 	mkdir -p build/vulkan-null
-	cp out/android/apks/AngleLibraries.apk build/vulkan-null/
+	cp out/android/apks/AngleLibraries.apk build/vulkan-null/ && mkdir -p $TERMUX_PREFIX/opt/angle-android && cp out/android/apks/AngleLibraries.apk $TERMUX_PREFIX/opt/angle-android
 	pushd build/vulkan-null
 	unzip AngleLibraries.apk
 	popd
